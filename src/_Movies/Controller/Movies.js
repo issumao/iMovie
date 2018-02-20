@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import Swiper from 'react-native-swiper';
-// import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import MovieIntroCard from '../View/MovieIntroCard';
 import MoviePopularCell from '../View/MoviePopularCell';
@@ -98,6 +98,9 @@ const styles = StyleSheet.create({
 				fontWeight: '100'
 			}
 		})
+	},
+	ionsStyle: {
+		
 	}
 });
 
@@ -115,7 +118,10 @@ export default class Movies extends React.Component {
       };
       
       render() {
-				// const iconPlay = <Icon name="md-play" size={21} color="#9F9F9F" style={{ paddingLeft: 3, width: 22 }} />;
+				const iconPlay = <Icon name="md-play" size={21} color="#ffffff" style={{ paddingLeft: 3, width: 22 }} />;
+				const iconTop = <Icon name="md-trending-up" size={21} color="#ffffff" style={{ width: 22 }} />;
+				const iconUp = <Icon name="md-recording" size={21} color="#ffffff" style={{ width: 22 }} />;
+
         return (
           <ScrollView style={{backgroundColor: '#f44444'}}>
             <Swiper
@@ -136,7 +142,7 @@ export default class Movies extends React.Component {
             <View style={styles.browseList}>
 						<TouchableOpacity activeOpacity={0.7}>
 							<View style={styles.browseListItem}>
-								{/* {iconPlay} */}
+								{iconPlay}
 								<Text
 									style={styles.browseListItemText}>
 									{/* onPress={this._viewMoviesList.bind(this, 'now_playing', 'Now Playing')}> */}
@@ -146,7 +152,7 @@ export default class Movies extends React.Component {
 						</TouchableOpacity>
 						<TouchableOpacity activeOpacity={0.7}>
 							<View style={styles.browseListItem}>
-								{/* {iconTop} */}
+								{iconTop}
                 <Text 
                 style={styles.browseListItemText} >
                 {/* onPress={this._viewMoviesList.bind(this, 'top_rated', 'Top Rated')}> */}
@@ -156,7 +162,7 @@ export default class Movies extends React.Component {
 						</TouchableOpacity>
 						<TouchableOpacity activeOpacity={0.7}>
 							<View style={styles.browseListItem}>
-								{/* {iconUp} */}
+								{iconUp}
 								<Text
 									style={styles.browseListItemText} >
 									{/* onPress={this._viewMoviesList.bind(this, 'upcoming', 'Upcoming')}> */}
