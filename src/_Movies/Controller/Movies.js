@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/Ionicons';
+import axios from 'axios';
+import { TMDB_URL, TMDB_API_KEY } from '../../product/productConfig';
 
 import MovieIntroCard from '../View/MovieIntroCard';
 import MoviePopularCell from '../View/MoviePopularCell';
@@ -10,7 +12,8 @@ import {
   Platform,
   StyleSheet,
   ScrollView,
-  TouchableOpacity,
+	TouchableOpacity,
+	RefreshControl,
   Button,
   Text,
   View
@@ -105,38 +108,123 @@ const styles = StyleSheet.create({
 });
 
 export default class Movies extends React.Component {
-    static navigationOptions = {
-        title: '电影',
-        // 配置样式
-        headerStyle: {
-          backgroundColor: '#f44444',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
-      };
-      
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			isLoading: true,
+			isRefreshing: false,
+			popularMovies: {results: new Array()},
+			nowPlayingMovies: {results: new Array()},
+		};
+
+		// this._viewMovie = this._viewMovie.bind(this);
+		this._onRefresh = this._onRefresh.bind(this);
+		this.retrievePopularMovies = this.retrievePopularMovies.bind(this);
+		// this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
+	}
+
+	componentWillMount() {
+		this._retrieveMovies();
+	}
+
+	static navigationOptions = {
+			title: '电影',
+			// 配置样式
+			headerStyle: {
+				backgroundColor: '#f44444',
+			},
+			headerTintColor: '#fff',
+			headerTitleStyle: {
+				fontWeight: 'bold',
+			},
+		};
+
+		retrievePopularMovies(page) {
+			return axios.get(`${TMDB_URL}/movie/popular?api_key=${TMDB_API_KEY}&page=${page}&language=zh&region=CN`)
+				.then(res => {
+					console.log('popularMovies', res.data); //eslint-disable-line
+					this.setState({ 
+						isRefreshing: false,
+						popularMovies: res.data
+					});
+				})
+				.catch(error => {
+					console.log('Popular', error); //eslint-disable-line
+				});
+		}
+
+		retrieveNowPlayingMovies(page) {
+			return axios.get(`${TMDB_URL}/movie/now_playing?api_key=${TMDB_API_KEY}&page=${page}&language=zh&region=CN`)
+				.then(res => {
+					console.log('nowPlayingMovies', res.data); //eslint-disable-line
+					this.setState({ 
+						isRefreshing: false,
+						nowPlayingMovies: res.data
+					});
+				})
+				.catch(error => {
+					console.log('Popular', error); //eslint-disable-line
+				});
+		}
+
+	_retrieveMovies(isRefreshed) {
+		// this.props.actions.retrieveNowPlayingMovies();
+		// this.props.actions.retrievePopularMovies();
+		this.retrievePopularMovies(1)
+		this.retrieveNowPlayingMovies(1)
+		// if (isRefreshed && this.setState({ isRefreshing: false }));
+	}
+	
+	_onRefresh() {
+		this.setState({ isRefreshing: true });
+		// this._retrieveMovies('isRefreshed');
+	}
+
       render() {
+
+				const { nowPlayingMovies, popularMovies } = this.state;
 				const iconPlay = <Icon name="md-play" size={21} color="#ffffff" style={{ paddingLeft: 3, width: 22 }} />;
 				const iconTop = <Icon name="md-trending-up" size={21} color="#ffffff" style={{ width: 22 }} />;
 				const iconUp = <Icon name="md-recording" size={21} color="#ffffff" style={{ width: 22 }} />;
 
         return (
-          <ScrollView style={{backgroundColor: '#f44444'}}>
+					<ScrollView style={{backgroundColor: '#f44444'}}
+						refreshControl={
+							<RefreshControl
+								refreshing={this.state.isRefreshing}
+								onRefresh={this._onRefresh}
+								colors={['#EA0000']}
+								tintColor="white"
+								title="loading..."
+								titleColor="white"
+								progressBackgroundColor="white"
+							/>
+						}>
             <Swiper
               autoplay
               autoplayTimeout={4}
               showsPagination={false}
               height={248 * widthMultipleWith7}>
-              {new Array(<MovieIntroCard key={""} info={{}} viewMovie={{}}/>,<MovieIntroCard key={""} info={{}} viewMovie={{}}/>)}
+							{/* {new Array(<MovieIntroCard key={""} info={{}} viewMovie={{}}/>,<MovieIntroCard key={""} info={{}} viewMovie={{}}/>)} */}
+							{
+								popularMovies.results.map(info => (
+									<MoviePopularCell key={info.id} info={info} viewMovie={this._viewMovie}/>
+									))
+							}
             </Swiper>
             <View>
               <View style={styles.listHeading}>
-                <Text style={styles.listHeadingLeft}>热门</Text>
+                <Text style={styles.listHeadingLeft}>当前热映</Text>
               </View>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {new Array(<MoviePopularCell key={"1"} info={{}} viewMovie={{}}/>,<MoviePopularCell key={"2"} info={{}} viewMovie={{}}/>)}
+							{
+								nowPlayingMovies.results.map(info => (
+									<MovieIntroCard key={info.id} info={info} viewMovie={this._viewMovie}/>
+									))
+							}
+                {/* {new Array(<MoviePopularCell key={"1"} info={{}} viewMovie={{}}/>,<MoviePopularCell key={"2"} info={{}} viewMovie={{}}/>)} */}
               </ScrollView>
             </View>
             <View style={styles.browseList}>
@@ -174,4 +262,11 @@ export default class Movies extends React.Component {
           </ScrollView>
         );
       }
-  };
+	};
+	
+	// Movies.propTypes = {
+	// 	// actions: PropTypes.object.isRequired,
+	// 	// nowPlayingMovies: PropTypes.object.isRequired,
+	// 	movieData: PropTypes.object.isRequired,
+	// 	// navigator: PropTypes.object
+	// };

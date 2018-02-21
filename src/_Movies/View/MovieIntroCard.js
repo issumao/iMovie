@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, PropTypes } from 'react-native';
+import { TMDB_URL, TMDB_IMG_URL} from '../../product/productConfig';
 import {
 	Image,
 	Button,
@@ -8,90 +9,51 @@ import {
 	View
 } from 'react-native';
 
+var Dimensions = require('Dimensions');
+var ScreenWidth = Dimensions.get('window').width;
+var ScreenHeight = Dimensions.get('window').height;
+var ScreenScale = Dimensions.get('window').scale;
+var widthMultipleWith7 = ScreenWidth / 375;
 const styles = StyleSheet.create({
-	linearGradient: {
-		top: 0,
-		left: 0,
-		right: 0,
-		height: 248,
-		position: 'absolute'
-	},
-	imageBackdrop: {
-		// flex: 1,
-		height: 248,
-		backgroundColor: 'black'
-	},
 	cardContainer: {
-		position: 'absolute',
-		top: 32,
-		right: 16,
-		left: 16,
-		flexDirection: 'row'
-	},
-	cardImage: {
-		height: 184,
-		width: 135,
+		height: 231 * widthMultipleWith7,
+		width: 135 * widthMultipleWith7,
+		backgroundColor: 'white',
+		flexDirection: 'column',
+		marginRight: 10,
 		borderRadius: 3
 	},
-	cardDetails: {
-		paddingLeft: 10,
-		flex: 1
+	cardImage: {
+		width: 135,
+		height: 184,
+		borderTopLeftRadius: 3,
+		borderTopRightRadius: 3
+	},
+	cardTitleContainer: {
+		flex: 1,
+		justifyContent: 'center'
 	},
 	cardTitle: {
-		color: 'white',
-		fontSize: 19,
-		fontWeight: '500',
-		paddingTop: 10
-	},
-	cardGenre: {
-		flexDirection: 'row'
-	},
-	cardGenreItem: {
-		fontSize: 11,
-		marginRight: 5,
-		color: 'white'
-	},
-	cardDescription: {
-		color: '#f7f7f7',
+		color: 'black',
 		fontSize: 13,
-		marginTop: 5
-	},
-	cardNumbers: {
-		flexDirection: 'row',
-		marginTop: 5
-	},
-	cardStar: {
-		flexDirection: 'row'
-	},
-	cardStarRatings: {
-		marginLeft: 5,
-		fontSize: 12,
-		color: 'white'
-	},
-	cardRunningHours: {
-		marginLeft: 5,
-		fontSize: 12
-	},
-	viewButton: {
-		justifyContent: 'center',
-		padding: 10,
-		borderRadius: 3,
-		backgroundColor: '#EA0000',
-		width: 100,
-		height: 30,
-		marginTop: 10
-	},
-	viewButtonText: {
-		color: 'white'
+		fontWeight: '500',
+		textAlign: 'center',
+		paddingHorizontal: 1
 	}
 });
 
 const MovieIntroCard = ({ info, viewMovie }) => (
-	<View style={{backgroundColor: '#800080'}}>
-		{/* <Image source={{ uri: `${TMDB_IMG_URL}/w780/${(info.backdrop_path || info.poster_path)}` }} style={styles.imageBackdrop} /> */}
-		<Image source={{ uri: `https://cloud.githubusercontent.com/assets/378279/12009887/33f4ae1c-ac8d-11e5-8666-7a87458753ee.png` }} style={styles.imageBackdrop} />
-		
-	</View>
+
+	<TouchableOpacity activeOpacity={0.8}>
+		<View style={styles.cardContainer}>
+			<Image source={{ uri: `${TMDB_IMG_URL}/w185/${info.poster_path}` }} style={styles.cardImage} />
+			<View style={styles.cardTitleContainer}>
+				<Text style={styles.cardTitle} numberOfLines={2}>
+					{info.title}
+				</Text>
+			</View>
+		</View>
+	</TouchableOpacity>
 );
 
 // MovieIntroCard.propTypes = {
