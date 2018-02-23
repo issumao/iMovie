@@ -25,7 +25,7 @@ const RootStack = StackNavigator(
     Home: {
       screen: Movies,
     },
-    Details: {
+    MovieDetails: {
       screen: MovieDetails,
     },
   },
@@ -33,13 +33,14 @@ const RootStack = StackNavigator(
     initialRouteName: 'Home',
     navigationOptions: {
       headerStyle: {
-        backgroundColor: '#f4511e',
+        backgroundColor: '#f44444',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
         fontWeight: 'bold',
       },
     },
+    headerMode: 'none'
   }
 );
 
