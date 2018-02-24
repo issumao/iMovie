@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Swiper from "react-native-swiper";
 import Icon from "react-native-vector-icons/Ionicons";
 import axios from "axios";
+import FastImage from "react-native-fast-image"
 import { TMDB_URL, TMDB_API_KEY } from "../../product/productConfig";
 
 import MovieIntroCard from "../View/MovieIntroCard";
@@ -15,7 +16,7 @@ import {
   RefreshControl,
   Button,
   Text,
-  View
+  View,
 } from "react-native";
 
 var Dimensions = require("Dimensions");
@@ -23,6 +24,7 @@ var ScreenWidth = Dimensions.get("window").width;
 var ScreenHeight = Dimensions.get("window").height;
 var ScreenScale = Dimensions.get("window").scale;
 var widthMultipleWith7 = ScreenWidth / 375;
+const { width } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
   container: {
@@ -101,7 +103,14 @@ const styles = StyleSheet.create({
       }
     })
   },
-  ionsStyle: {}
+  ionsStyle: {},
+  imageBackdrop: {
+    // flex: 1,
+    height: 248,
+    backgroundColor: 'black',
+    // flex: 1,
+    width
+  },
 });
 
 export default class Movies extends React.Component {
@@ -140,7 +149,7 @@ export default class Movies extends React.Component {
   retrievePopularMovies(page) {
     return axios
       .get(
-        `${TMDB_URL}/movie/popular?api_key=${TMDB_API_KEY}&page=${page}&language=zh&region=CN`
+        `${TMDB_URL}/movie/popular?api_key=${TMDB_API_KEY}&page=${page}&language=zh`//&region=CN`
       )
       .then(res => {
         console.log("popularMovies", res.data); //eslint-disable-line
@@ -157,7 +166,7 @@ export default class Movies extends React.Component {
   retrieveNowPlayingMovies(page) {
     return axios
       .get(
-        `${TMDB_URL}/movie/now_playing?api_key=${TMDB_API_KEY}&page=${page}&language=zh&region=CN`
+        `${TMDB_URL}/movie/now_playing?api_key=${TMDB_API_KEY}&page=${page}&language=zh`//&region=CN`
       )
       .then(res => {
         console.log("nowPlayingMovies", res.data); //eslint-disable-line
@@ -240,17 +249,36 @@ export default class Movies extends React.Component {
           showsPagination={false}
           height={248 * widthMultipleWith7}
         >
-          {nowPlayingMovies.results.map(info => (
+          {/* {nowPlayingMovies.results.map(info => (
             <MovieIntroCard
               key={info.id}
               info={info}
               viewMovie={this._viewMovie}
             />
-          ))}
+          ))} */}
+
+
+          {
+            nowPlayingMovies.results.length > 0 ?
+              nowPlayingMovies.results.map(info => (
+                <MovieIntroCard
+                  key={info.id}
+                  info={info}
+                  viewMovie={this._viewMovie}
+                />
+              )) :
+              new Array(<View key={"defaultHeaderImage"} >
+                <FastImage
+                  source={require('../../../image/defaultHeaderImage.png')}
+                  style={styles.imageBackdrop}
+                  resizeMode={FastImage.resizeMode.stretch}
+                />
+              </View>)
+          }
         </Swiper>
         <View>
           <View style={styles.listHeading}>
-            <Text style={styles.listHeadingLeft}>当前热映</Text>
+            <Text style={styles.listHeadingLeft}>当前热门</Text>
           </View>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {popularMovies.results.map(info => (

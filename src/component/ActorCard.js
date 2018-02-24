@@ -1,4 +1,5 @@
 import React from 'react';
+import FastImage from "react-native-fast-image"
 import {
     View,
     StyleSheet,
@@ -55,7 +56,7 @@ export default class ActorCard extends React.Component {
             <View style={this.props.style}>
                 <View style={[styles.container, fixStyles.container]} backgroundColor='white'>
                     <View style={styles.actorContainer}>
-                        <Image source={{ uri: this.props.uri }} style={[styles.actorImage, fixStyles.actorImage]} />
+                        <FastImage source={{ uri: this.props.uri }} style={[styles.actorImage, fixStyles.actorImage]} />
                     </View>
                     <View style={styles.textContainer}>
                         <Text numberOfLines={1} adjustsFontSizeToFit={true} style={styles.title}>{this.props.title}</Text>

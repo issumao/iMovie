@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, PropTypes } from 'react-native';
+import FastImage from "react-native-fast-image"
 import { TMDB_URL, TMDB_IMG_URL } from '../../product/productConfig';
 import {
 	Image,
@@ -15,6 +16,7 @@ var ScreenWidth = Dimensions.get('window').width;
 var ScreenHeight = Dimensions.get('window').height;
 var ScreenScale = Dimensions.get('window').scale;
 var widthMultipleWith7 = ScreenWidth / 375;
+
 const styles = StyleSheet.create({
 	cardContainer: {
 		height: 231 * widthMultipleWith7,
@@ -47,7 +49,7 @@ const MoviePopularCell = ({ info, viewMovie }) => (
 
 	<TouchableOpacity activeOpacity={0.8} onPress={viewMovie.bind(this, info.id)}>
 		<View style={styles.cardContainer}>
-			<Image source={{ uri: `${TMDB_IMG_URL}/w185/${info.poster_path}` }} style={styles.cardImage} />
+			<FastImage source={{ uri: `${TMDB_IMG_URL}/w185/${info.poster_path}` }} style={styles.cardImage} />
 			<View style={styles.cardTitleContainer}>
 				<Text style={styles.cardTitle} numberOfLines={2}>
 					{info.title}

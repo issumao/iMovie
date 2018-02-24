@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-
+import { StyleSheet, Dimensions} from 'react-native';
+const { width } = Dimensions.get('window')
 const styles = StyleSheet.create({
     textStyle: {
         color: 'white',
@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#f44444'
     },
     swiper: {
+        // backgroundColor: '#111111'
         // position: 'absolute',
         // flex: 1
     },
@@ -40,7 +41,9 @@ const styles = StyleSheet.create({
     imageBackdrop: {
         // flex: 1,
         height: 248,
-        backgroundColor: 'black'
+        backgroundColor: 'black',
+        // flex: 1,
+        width
     },
     cardContainer: {
         flex: 1,
@@ -117,10 +120,20 @@ const styles = StyleSheet.create({
     },
     listTextLeft: {
         paddingHorizontal: 16,
-        color: "white",
-        fontSize: 16
+        color: "black",
+        fontSize: 14
+    },
+    listTextBackView: {
+        marginLeft: 16,
+        marginRight: 16,
+        paddingTop: 16,
+        paddingBottom: 16,
+        backgroundColor: "white",
+        borderRadius: 4, 
     },
     actorScroll: {
+        paddingBottom: 16
+        // marginBottom: 16,
         // paddingLeft: 16,
         // marginRight: 16,
         // paddingHorizontal: 16,
@@ -133,6 +146,21 @@ const styles = StyleSheet.create({
         height: 50,
         marginRight: 16,
     },
+
+    cardImage: {
+        width: 135,
+        height: 184,
+        borderRadius: 4, 
+        borderTopLeftRadius: 3,
+        borderTopRightRadius: 3,
+        marginRight: 16,
+        backgroundColor: 'gray',
+    },
+    SwiperView: {
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor: 'transparent'
+    }
 });
 
 export default styles;

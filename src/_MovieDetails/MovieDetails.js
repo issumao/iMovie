@@ -7,6 +7,8 @@ import styles from './MovieDetailsStyle';
 import ProgressBar from '../component/ProgressBar';
 import ActorCard from '../component/ActorCard';
 import { TMDB_URL, TMDB_API_KEY, TMDB_IMG_URL } from "../product/productConfig";
+import FastImage from "react-native-fast-image"
+import defaultImage from "../../image/defaultHeaderImage.png"
 
 import {
   Platform,
@@ -68,7 +70,7 @@ export default class DetailsScreen extends React.Component {
 
   // _获取详细信息
   _retrieveMovieDetails(movieId) {
-    return axios.get(`${TMDB_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}&append_to_response=casts,images,videos`)
+    return axios.get(`${TMDB_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}&append_to_response=casts,images,videos`)//&language=zh`)
       .then(res => {
         this.setState({
           isLoading: false,
@@ -115,108 +117,142 @@ export default class DetailsScreen extends React.Component {
     ))).join(' / ')
 
     return (
-      this.state.isLoading ? <View style={styles.progressBar}><ProgressBar /></View> :
-        <ScrollView style={styles.container}
-          // onScroll={this._onScroll.bind(this)}
-          // scrollEventThrottle={100}
-          // onContentSizeChange={this._onContentSizeChange}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.isRefreshing}
-              // onRefresh={this._onRefresh}
-              colors={['#EA0000']}
-              tintColor="white"
-              title="loading..."
-              titleColor="white"
-              progressBackgroundColor="white"
-            />
-          }>
-          <View>
-            <Swiper
-              style={styles.swiper}
-              autoplay
-              autoplayTimeout={4}
-              showsPagination={false}
-              height={248}
-              loop
-              index={5}>
-              {
-                info.images.posters.map((item, index) => (
-                  <View key={index}>
-                    <Image source={{ uri: `${TMDB_IMG_URL}/w780/${(item.file_path)}` }} style={styles.imageBackdrop} />
-                    {/* <LinearGradient colors={['rgba(0, 0, 0, 0.2)', 'rgba(0,0,0, 0.2)', 'rgba(0,0,0, 0.7)']} style={styles.linearGradient} /> */}
-                  </View>
-                ))
-              }
-            </Swiper>
-            {/* 返回键 */}
-            <View style={styles.icoBackView}>
-              <TouchableOpacity activeOpacity={0.7} onPress={this._goBack}>
-                <View>
-                  {iconBack}
-                </View>
-              </TouchableOpacity>
-            </View>
-            {/* 内容 */}
-            <View style={styles.cardContainer}>
-              <Image source={{ uri: `${TMDB_IMG_URL}/w185/${info.poster_path}` }} style={styles.cardImage} />
-              <View style={styles.cardDetails}>
-                <Text style={styles.cardTitle}>{info.title}</Text>
-                <Text style={styles.cardTagline}>{info.tagline}</Text>
-                <View style={styles.cardGenre}>
-                  {
-                    <Text key={genresString} style={styles.cardGenreItem}>{genresString}</Text>
-                  }
-                </View>
-                <View style={styles.cardNumbers}>
-                  <View style={styles.cardStar}>
-                    {iconStar}
-                    <Text style={styles.cardStarRatings}>9999.9</Text>
-                  </View>
-                  <Text style={styles.cardRunningHours} />
-                </View>
-              </View>
-            </View>
-            <View style={styles.contentContainer}>
-              <View style={styles.listHeading}>
-                <Text style={styles.listHeadingLeft}>概述</Text>
-              </View>
-              <Text style={styles.listTextLeft}>{info.overview}</Text>
-            </View>
-            <View style={styles.listHeading}>
-              <Text style={styles.listHeadingLeft}>演职人员</Text>
-            </View>
+      this.state.isLoading ? <View style={styles.progressBar}>
+        <ProgressBar />
+
+        {/* 返回键 */}
+        <View style={styles.icoBackView}>
+          <TouchableOpacity activeOpacity={0.7} onPress={this._goBack}>
             <View>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.actorScroll}>
-                {
-                  info.casts.cast.map((item, index) => (
-                    < ActorCard key={item.cast_id} style={[styles.actorCard, index == 0 && styles.actorCard_left]}
-                      title={item.name}
-                      content={item.character && `as ${item.character}`}
-                      uri={`${TMDB_IMG_URL}/w185/${item.profile_path}`}
-                    />
-                    // index == 0 ? 
-                    //   (< ActorCard key={item.cast_id} style={styles.actorCard}
-                    //     title={item.name}
-                    //     content={item.character && `as ${item.character}`}
-                    //     uri={`${TMDB_IMG_URL}/w185/${item.profile_path}`}
-                    //   />) : index == info.casts.cast.length - 1 ?
-                    //     (< ActorCard key={item.cast_id} style={styles.actorCard}
-                    //       title={item.name}
-                    //       content={item.character && `as ${item.character}`}
-                    //       uri={`${TMDB_IMG_URL}/w185/${item.profile_path}`}
-                    //     />) :
-                    //     (< ActorCard key={item.cast_id} style={styles.actorCard}
-                    //       title={item.name}
-                    //       content={item.character && `as ${item.character}`}
-                    //       uri={`${TMDB_IMG_URL}/w185/${item.profile_path}`}
-                    //     />)
-                  ))
-                }
-              </ScrollView>
+              {iconBack}
             </View>
+          </TouchableOpacity>
+        </View>
+      </View> :
+        <View>
+          <ScrollView style={styles.container}
+            // onScroll={this._onScroll.bind(this)}
+            // scrollEventThrottle={100}
+            // onContentSizeChange={this._onContentSizeChange}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.isRefreshing}
+                // onRefresh={this._onRefresh}
+                colors={['#EA0000']}
+                tintColor="white"
+                title="loading..."
+                titleColor="white"
+                progressBackgroundColor="white"
+              />
+            }>
+            <View>
+              <Swiper
+                style={styles.swiper}
+                autoplay
+                autoplayTimeout={4}
+                showsPagination={false}
+                height={248}
+                loop
+                index={5}>
+                {
+                  info.images.backdrops.length > 0 ?
+                    info.images.backdrops.map((item, index) => (
+                    <View key={index}>
+                      <FastImage
+                        source={{ uri: `${TMDB_IMG_URL}/w780/${(item.file_path)}` }}
+                        style={styles.imageBackdrop}
+                        resizeMode='cover'
+                      />
+                    </View>
+                  )) : 
+                    new Array(<View key={"defaultHeaderImage"} style={styles.SwiperView}> 
+                      <FastImage
+                        source={require('../../image/defaultHeaderImage.png')}
+                        style={styles.imageBackdrop}
+                        resizeMode={FastImage.resizeMode.stretch}
+                      />
+                    </View>)
+                }
+              </Swiper>
+              {/* 内容 */}
+              <View style={styles.cardContainer}>
+                <FastImage
+                  source={{ uri: `${TMDB_IMG_URL}/w185/${info.poster_path}` }}
+                  style={styles.cardImage}
+                />
+                <View style={styles.cardDetails}>
+                  <Text style={styles.cardTitle}>{info.title}</Text>
+                  <Text style={styles.cardTagline}>{info.tagline}</Text>
+                  <View style={styles.cardGenre}>
+                    {
+                      <Text key={genresString} style={styles.cardGenreItem}>{genresString}</Text>
+                    }
+                  </View>
+                  <View style={styles.cardNumbers}>
+                    <View style={styles.cardStar}>
+                      {iconStar}
+                      <Text style={styles.cardStarRatings}>9999.9</Text>
+                    </View>
+                    <Text style={styles.cardRunningHours} />
+                  </View>
+                </View>
+              </View>
+              <View style={styles.contentContainer}>
+                <View style={styles.listHeading}>
+                  <Text style={styles.listHeadingLeft}>概述</Text>
+                </View>
+                <View style={styles.listTextBackView}>
+                  <Text style={styles.listTextLeft}>{info.overview}</Text>
+                </View>
+              </View>
+              <View style={styles.listHeading}>
+                <Text style={styles.listHeadingLeft}>演职人员</Text>
+              </View>
+              <View>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.actorScroll}>
+                  {
+                    info.casts.cast.map((item, index) => (
+                      < ActorCard key={item.cast_id} style={[styles.actorCard, index == 0 && styles.actorCard_left]}
+                        title={item.name}
+                        content={item.character && `as ${item.character}`}
+                        uri={`${TMDB_IMG_URL}/w185/${item.profile_path}`}
+                      />
+                    ))
+                  }
+                </ScrollView>
+              </View>
+              <View style={styles.listHeading}>
+                <Text style={styles.listHeadingLeft}>海报</Text>
+              </View>
+              {/* 海报 */}
+              <View>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.actorScroll}>
+                  {
+                    info.images.posters.map((item, index) => (
+                      <View key={index}>
+                        <FastImage
+                          source={{ uri: `${TMDB_IMG_URL}/w780/${(item.file_path)}` }}
+                          style={[styles.cardImage, index == 0 && styles.actorCard_left]} />
+                      </View>
+                    ))
+                  }
+                </ScrollView>
+              </View>
+              {/* <View style={styles.listHeading}>
+                <Text style={styles.listHeadingLeft}>预告片</Text>
+              </View> */}
+            </View>
+          </ScrollView>
+
+          {/* 返回键 */}
+          <View style={styles.icoBackView}>
+            <TouchableOpacity activeOpacity={0.7} onPress={this._goBack}>
+              <View>
+                {iconBack}
+              </View>
+            </TouchableOpacity>
           </View>
-        </ScrollView>
+        </View>
     );
   }
 }

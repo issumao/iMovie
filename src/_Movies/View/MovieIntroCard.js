@@ -1,8 +1,9 @@
 
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+import FastImage from "react-native-fast-image"
 import { StyleSheet, PropTypes } from 'react-native';
-import { TMDB_URL, TMDB_IMG_URL } from '../../product/productConfig';
+import { TMDB_URL, TMDB_IMG_URL } from '../../product/productConfig';FastImage
 import {
 	Image,
 	Button,
@@ -110,7 +111,7 @@ const MovieIntroCard = ({ info, viewMovie }) => (
 		<Image source={{ uri: `${TMDB_IMG_URL}/w780/${(info.backdrop_path || info.poster_path)}` }} style={styles.imageBackdrop} />
 		<View style={styles.viewBackdrop} />
 		<View style={styles.cardContainer}>
-			<Image source={{ uri: `${TMDB_IMG_URL}/w185/${info.poster_path}` }} style={styles.cardImage} />
+			<FastImage source={{ uri: `${TMDB_IMG_URL}/w185/${info.poster_path}` }} style={styles.cardImage} />
 
 			<View style={styles.cardDetails}>
 				<Text style={styles.cardTitle} numberOfLines={2}>
