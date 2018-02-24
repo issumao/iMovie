@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import axios from "axios";
 import Swiper from "react-native-swiper";
 import Icon from "react-native-vector-icons/Ionicons";
+import MCIcon from "react-native-vector-icons/MaterialCommunityIcons";
+
 import styles from './MovieDetailsStyle';
 import ProgressBar from '../component/ProgressBar';
 import ActorCard from '../component/ActorCard';
@@ -108,8 +110,10 @@ export default class DetailsScreen extends React.Component {
     // );
     // 3
 
-    const iconStar = <Icon name="md-star" size={16} color="#F5B642" />;
     const iconBack = <Icon name="ios-arrow-back" size={32} color="white" />;
+    const iconStar = <Icon name="md-star" size={16} color="#F5B642" />;
+    const iconMovie = <MCIcon name="format-list-bulleted-type" size={16} color="black" />;
+    const iconTime = <MCIcon name="timetable" size={16} color="#6638F0" />;
     const { info } = this.state;
 
     var genresString = this.state.isLoading ? "" : (info.genres.map(item => (
@@ -117,18 +121,19 @@ export default class DetailsScreen extends React.Component {
     ))).join(' / ')
 
     return (
-      this.state.isLoading ? <View style={styles.progressBar}>
-        <ProgressBar />
+      this.state.isLoading ?
+        <View style={styles.progressBar}>
+          <ProgressBar />
 
-        {/* 返回键 */}
-        <View style={styles.icoBackView}>
-          <TouchableOpacity activeOpacity={0.7} onPress={this._goBack}>
-            <View>
-              {iconBack}
-            </View>
-          </TouchableOpacity>
-        </View>
-      </View> :
+          {/* 返回键 */}
+          <View style={styles.icoBackView}>
+            <TouchableOpacity activeOpacity={0.7} onPress={this._goBack}>
+              <View>
+                {iconBack}
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View> :
         <View>
           <ScrollView style={styles.container}
             // onScroll={this._onScroll.bind(this)}
@@ -157,15 +162,15 @@ export default class DetailsScreen extends React.Component {
                 {
                   info.images.backdrops.length > 0 ?
                     info.images.backdrops.map((item, index) => (
-                    <View key={index}>
-                      <FastImage
-                        source={{ uri: `${TMDB_IMG_URL}/w780/${(item.file_path)}` }}
-                        style={styles.imageBackdrop}
-                        resizeMode='cover'
-                      />
-                    </View>
-                  )) : 
-                    new Array(<View key={"defaultHeaderImage"} style={styles.SwiperView}> 
+                      <View key={index}>
+                        <FastImage
+                          source={{ uri: `${TMDB_IMG_URL}/w780/${(item.file_path)}` }}
+                          style={styles.imageBackdrop}
+                          resizeMode='cover'
+                        />
+                      </View>
+                    )) :
+                    new Array(<View key={"defaultHeaderImage"} style={styles.SwiperView}>
                       <FastImage
                         source={require('../../image/defaultHeaderImage.png')}
                         style={styles.imageBackdrop}
@@ -184,16 +189,18 @@ export default class DetailsScreen extends React.Component {
                   <Text style={styles.cardTitle}>{info.title}</Text>
                   <Text style={styles.cardTagline}>{info.tagline}</Text>
                   <View style={styles.cardGenre}>
-                    {
-                      <Text key={genresString} style={styles.cardGenreItem}>{genresString}</Text>
-                    }
+                    {iconMovie}
+                    <Text key={genresString} style={styles.cardGenreItem}>{genresString}</Text>
                   </View>
                   <View style={styles.cardNumbers}>
                     <View style={styles.cardStar}>
                       {iconStar}
-                      <Text style={styles.cardStarRatings}>9999.9</Text>
+                      <Text style={styles.cardStarRatings}>{info.vote_average}</Text>
                     </View>
-                    <Text style={styles.cardRunningHours} />
+                  </View>
+                  <View style={styles.cardGenre}>
+                    {iconTime}
+                    <Text key={"release_date"} style={styles.cardGenreItem}>{info.release_date}</Text>
                   </View>
                 </View>
               </View>
@@ -215,7 +222,7 @@ export default class DetailsScreen extends React.Component {
                       < ActorCard key={item.cast_id} style={[styles.actorCard, index == 0 && styles.actorCard_left]}
                         title={item.name}
                         content={item.character && `as ${item.character}`}
-                        uri={`${TMDB_IMG_URL}/w185/${item.profile_path}`}
+                        uri={item.profile_path && `${TMDB_IMG_URL}/w185/${item.profile_path}`}
                       />
                     ))
                   }
@@ -226,7 +233,7 @@ export default class DetailsScreen extends React.Component {
               </View>
               {/* 海报 */}
               <View>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.actorScroll}>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} >
                   {
                     info.images.posters.map((item, index) => (
                       <View key={index}>
@@ -242,6 +249,28 @@ export default class DetailsScreen extends React.Component {
                 <Text style={styles.listHeadingLeft}>预告片</Text>
               </View> */}
             </View>
+
+            {
+              info.casts.crew.length > 0 ?
+                <View style={styles.lastPadding}>
+                  <View style={styles.listHeading}>
+                    <Text style={styles.listHeadingLeft}>幕后团队</Text>
+                  </View>
+                  <View>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.actorScroll}>
+                      {
+
+                        info.casts.crew.map((item, index) => (
+                          < ActorCard key={item.credit_id} style={[styles.actorCard, index == 0 && styles.actorCard_left]}
+                            title={item.name}
+                            content={item.department && `as ${item.department}`}
+                            uri={item.profile_path && `${TMDB_IMG_URL}/w185/${item.profile_path}`}
+                          />
+                        ))
+                      }
+                    </ScrollView>
+                  </View></View> : <View></View>
+            }
           </ScrollView>
 
           {/* 返回键 */}

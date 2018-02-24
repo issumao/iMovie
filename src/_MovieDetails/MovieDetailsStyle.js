@@ -66,17 +66,21 @@ const styles = StyleSheet.create({
     cardTitle: {
         color: 'white',
         fontSize: 19,
-        fontWeight: '500',
+        fontWeight: "bold",
         paddingTop: 10
     },
     cardTagline: {
+        marginTop: 5,
         color: 'white',
         fontSize: 15
     },
     cardGenre: {
-        flexDirection: 'row'
+        marginTop: 5,
+        flexDirection: 'row',
+        alignItems: "center",
     },
     cardGenreItem: {
+        marginLeft: 5,
         textAlign: 'left',
         fontSize: 11,
         marginRight: 5,
@@ -84,10 +88,11 @@ const styles = StyleSheet.create({
     },
     cardNumbers: {
         flexDirection: 'row',
-        marginTop: 5
+        marginTop: 5,
     },
     cardStar: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignItems: "center",
     },
     cardStarRatings: {
         marginLeft: 5,
@@ -132,11 +137,16 @@ const styles = StyleSheet.create({
         borderRadius: 4, 
     },
     actorScroll: {
-        paddingBottom: 16
+        // paddingBottom: 16
         // marginBottom: 16,
         // paddingLeft: 16,
         // marginRight: 16,
         // paddingHorizontal: 16,
+    },
+    postersScroll: {
+    },
+    lastPadding: {
+        paddingBottom: 16
     },
     actorCard_left: {
         marginLeft: 16,

@@ -22,7 +22,7 @@ export default class ActorCard extends React.Component {
         super(props);
 
         const { style } = props;
-        const defaultStyle = style ? StyleSheet.flatten([style])  : { width: 120, height: 60 };
+        const defaultStyle = style ? StyleSheet.flatten([style]) : { width: 120, height: 60 };
 
         this.state = {
             // uri: props.uri,
@@ -51,12 +51,17 @@ export default class ActorCard extends React.Component {
                 borderRadius: this.state.height / 5 * 4 / 2
             },
         })
-        
+
         return (
             <View style={this.props.style}>
                 <View style={[styles.container, fixStyles.container]} backgroundColor='white'>
                     <View style={styles.actorContainer}>
-                        <FastImage source={{ uri: this.props.uri }} style={[styles.actorImage, fixStyles.actorImage]} />
+                        {
+                            this.props.uri ?
+                                <FastImage source={{ uri: this.props.uri }} style={[styles.actorImage, fixStyles.actorImage]} />
+                                :
+                                <FastImage source={require('../../image/defaultHeaderImage.png')} style={[styles.actorImage, fixStyles.actorImage]} />
+                        }
                     </View>
                     <View style={styles.textContainer}>
                         <Text numberOfLines={1} adjustsFontSizeToFit={true} style={styles.title}>{this.props.title}</Text>
