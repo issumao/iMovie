@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
 		borderRadius: 3
 	},
 	cardImage: {
-		width: 135,
-		height: 184,
+		width: 135 * widthMultipleWith7,
+		height: 184 * widthMultipleWith7,
 		borderTopLeftRadius: 3,
 		borderTopRightRadius: 3
 	},

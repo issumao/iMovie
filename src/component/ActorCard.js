@@ -13,10 +13,10 @@ import {
 export default class ActorCard extends React.Component {
 
     // ???
-    static propTypes = {
-        style: View.propTypes.style,
-        elementStyle: View.propTypes.style,
-    }
+    // static propTypes = {
+    //     style: View.propTypes.style,
+    //     elementStyle: View.propTypes.style,
+    // }
 
     constructor(props) {
         super(props);

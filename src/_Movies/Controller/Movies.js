@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 15,
-    marginTop: 30
   },
   listHeadingLeft: {
     color: "white",
@@ -86,7 +85,8 @@ const styles = StyleSheet.create({
         paddingVertical: 10
       }
     }),
-    flexDirection: "row"
+    flexDirection: "row",
+    alignItems: 'center',
   },
   browseListItemText: {
     flex: 1,
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "100"
       }
-    })
+    }),
   },
   ionsStyle: {},
   imageBackdrop: {
@@ -256,8 +256,6 @@ export default class Movies extends React.Component {
               viewMovie={this._viewMovie}
             />
           ))} */}
-
-
           {
             nowPlayingMovies.results.length > 0 ?
               nowPlayingMovies.results.map(info => (
@@ -296,7 +294,8 @@ export default class Movies extends React.Component {
               {iconPlay}
               <Text style={styles.browseListItemText}>
                 {/* onPress={this._viewMoviesList.bind(this, 'now_playing', 'Now Playing')}> */}
-                Now Playing
+                {/* Now Playing */}
+                当前院线
               </Text>
             </View>
           </TouchableOpacity>
@@ -305,7 +304,8 @@ export default class Movies extends React.Component {
               {iconTop}
               <Text style={styles.browseListItemText}>
                 {/* onPress={this._viewMoviesList.bind(this, 'top_rated', 'Top Rated')}> */}
-                Top Rated
+                {/* Top Rated */}
+                最受好评的
               </Text>
             </View>
           </TouchableOpacity>
@@ -314,7 +314,8 @@ export default class Movies extends React.Component {
               {iconUp}
               <Text style={styles.browseListItemText}>
                 {/* onPress={this._viewMoviesList.bind(this, 'upcoming', 'Upcoming')}> */}
-                Upcoming
+                {/* Upcoming */}
+                即将上映的
               </Text>
             </View>
           </TouchableOpacity>

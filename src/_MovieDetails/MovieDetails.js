@@ -57,6 +57,7 @@ export default class DetailsScreen extends React.Component {
     // this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
     this._retrieveMovieDetails = this._retrieveMovieDetails.bind(this);
     this._goBack = this._goBack.bind(this);
+    this._goImage = this._goImage.bind(this);
   }
 
   componentWillMount() {
@@ -89,6 +90,13 @@ export default class DetailsScreen extends React.Component {
   _goBack() {
     /* 1. Navigate to the Details route with params */
     this.props.navigation.goBack()
+  }
+
+  _goImage(item) {
+    this.props.navigation.navigate('imageShowView', {
+      images: new Array({ photo: `${TMDB_IMG_URL}/w780/${(item.file_path)}` }),
+      // images: `${TMDB_IMG_URL}/w780/${(item.file_path)}`,
+    });
   }
 
   render() {
@@ -236,11 +244,13 @@ export default class DetailsScreen extends React.Component {
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} >
                   {
                     info.images.posters.map((item, index) => (
-                      <View key={index}>
-                        <FastImage
-                          source={{ uri: `${TMDB_IMG_URL}/w780/${(item.file_path)}` }}
-                          style={[styles.cardImage, index == 0 && styles.actorCard_left]} />
-                      </View>
+                      <TouchableOpacity key={index} activeOpacity={0.7} onPress={this._goImage.bind(this, item)}>
+                        <View key={index}>
+                          <FastImage
+                            source={{ uri: `${TMDB_IMG_URL}/w780/${(item.file_path)}` }}
+                            style={[styles.cardImage, index == 0 && styles.actorCard_left]} />
+                        </View>
+                      </TouchableOpacity>
                     ))
                   }
                 </ScrollView>
