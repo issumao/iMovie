@@ -1,6 +1,5 @@
 import React from 'react';
 import { Modal, Dimensions } from 'react-native';
-import ImageViewer from 'react-native-image-zoom-viewer';
 import Icon from "react-native-vector-icons/Ionicons";
 import FastImage from "react-native-fast-image"
 import PhotoBrowser from 'react-native-photo-browser';
@@ -68,42 +67,24 @@ export default class imageShowView extends React.Component {
 
         const iconBack = <Icon name="ios-arrow-back" size={32} color="white" />;
         return (
-            // this.state.isLoading ?
-                <View style={styles.progressBar}>
-                    {/* <ProgressBar /> */}
-                {/* <ImageViewer show={true} imageUrls={images} onClick={this._goBack} /> */}
+            <View style={styles.progressBar}>
                 <PhotoBrowser
                     onBack={this._goBack}
                     mediaList={images}
                     // initialIndex={index}
                     displayTopBar={false}
                     enableGrid={false}
-                    // displayActionButton={true}
+                // displayActionButton={true}
                 />
-                    {/* 返回键 */}
-                    <View style={styles.icoBackView}>
-                        <TouchableOpacity activeOpacity={0.7} onPress={this._goBack}>
-                            <View>
-                                {iconBack}
-                            </View>
-                        </TouchableOpacity>
-                    </View>
+                {/* 返回键 */}
+                <View style={styles.icoBackView}>
+                    <TouchableOpacity activeOpacity={0.7} onPress={this._goBack}>
+                        <View>
+                            {iconBack}
+                        </View>
+                    </TouchableOpacity>
                 </View>
-            // <View>
-            //     <View style={styles.view}>
-
-            //     </View>
-            //     {/* // <Modal visible={this.state.modalVisible} transparent={true}> */}
-            //         <ImageViewer imageUrls={images} onClick={this._goBack}/>
-            //         <View style={styles.icoBackView}>
-            //             <TouchableOpacity activeOpacity={0.7} onPress={this._goBack}>
-            //                 <View>
-            //                     {iconBack}
-            //                 </View>
-            //             </TouchableOpacity>
-            //         </View>
-            //     {/* // </Modal> */}
-            // </View>
+            </View>
         )
     }
 }

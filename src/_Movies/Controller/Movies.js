@@ -5,6 +5,7 @@ import axios from "axios";
 import FastImage from "react-native-fast-image"
 import { TMDB_URL, TMDB_API_KEY } from "../../product/productConfig";
 
+
 import MovieIntroCard from "../View/MovieIntroCard";
 import MoviePopularCell from "../View/MoviePopularCell";
 

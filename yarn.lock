@@ -16,6 +16,16 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
+"@types/react-native@^0.52.13":
+  version "0.52.13"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.52.13.tgz#251289b6c995c738f6f94def742308cf7b47f79b"
+  dependencies:
+    "@types/react" "*"
+
+"@types/react@*":
+  version "16.0.38"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.0.38.tgz#76617433ea10274505f60bb86eddfdd0476ffdc2"
+
 abab@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"

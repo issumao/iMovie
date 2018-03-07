@@ -12,6 +12,9 @@ import { TMDB_URL, TMDB_API_KEY, TMDB_IMG_URL } from "../product/productConfig";
 import FastImage from "react-native-fast-image"
 import defaultImage from "../../image/defaultHeaderImage.png"
 
+import IOC from "../Models/IOC"
+// import IOC from "../../Models/IOC"
+
 import {
   Platform,
   StyleSheet,
@@ -73,17 +76,29 @@ export default class DetailsScreen extends React.Component {
 
   // _获取详细信息
   _retrieveMovieDetails(movieId) {
-    return axios.get(`${TMDB_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}&append_to_response=casts,images,videos`)//&language=zh`)
+  
+    IOC.ioc("MovieFetchProtocol").movie(movieId)
       .then(res => {
         this.setState({
           isLoading: false,
-          info: res.data
+          info: res
         })
-        console.log('res.data', res.data); //eslint-disable-line
+        console.log('res', res); //eslint-disable-line
       })
       .catch(error => {
         console.log('Movie Details', error); //eslint-disable-line
       });
+    // return axios.get(`${TMDB_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}&append_to_response=casts,images,videos`)//&language=zh`)
+    //   .then(res => {
+    //     this.setState({
+    //       isLoading: false,
+    //       info: res.data
+    //     })
+    //     console.log('res.data', res.data); //eslint-disable-line
+    //   })
+    //   .catch(error => {
+    //     console.log('Movie Details', error); //eslint-disable-line
+    //   });
   }
 
 

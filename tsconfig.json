@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "allowJs": true,
+        "jsx": "react-native",
+        // "outDir": "./dist",
+        "sourceMap": true,
+        "noImplicitAny": false,
+        "allowSyntheticDefaultImports": true,
+        "noImplicitThis": true
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
