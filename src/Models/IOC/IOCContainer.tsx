@@ -1,22 +1,23 @@
-
-export interface ServiceProtocol {
+// IOC Container
+export interface IOCProtocol {
 
 }
 
-export class Services {
+// IOC 容器
+export class IOCContainer {
 
-    map: { [key: string]: ServiceProtocol; }
+    map: { [key: string]: IOCProtocol; }
 
     constructor() {
         this.map = {}
     }
 
-    reg = function reg(k: string, p: ServiceProtocol): void {
+    reg = (k: string, p: IOCProtocol) => {
 
         this.map[k] = p
     }
 
-    ioc = function reg(k: string): ServiceProtocol {
+    ioc = (k: string): IOCProtocol => {
         return this.map[k]
     }
 
@@ -29,4 +30,7 @@ export class Services {
     // }
 }
 
-export let shared = new Services()
+let shared = new IOCContainer()
+
+// 导出默认容器
+export default shared

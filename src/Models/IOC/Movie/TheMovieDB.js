@@ -1,4 +1,5 @@
 import axios from 'axios';
+// The Movie DB 类
 export class TheMovieDB {
     constructor(url, key, imageUrl) {
         this.url = url;
@@ -29,10 +30,5 @@ export class TheMovieDB {
             return;
         });
     }
-}
-function test() {
-    new TheMovieDB("", "", "").movie("").then(res => {
-        res.id;
-    });
 }
 //# sourceMappingURL=TheMovieDB.js.map

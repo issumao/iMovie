@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { MovieProtocol, MovieFetchProtocol } from './MovieProtocol'
 
+// The Movie DB 类
 export class TheMovieDB implements MovieFetchProtocol {
 
     url: string;
@@ -38,11 +39,4 @@ export class TheMovieDB implements MovieFetchProtocol {
                 }); return
         })
     }
-}
-
-function test() {
-    new TheMovieDB("", "", "").movie("").then(res => {
-        res.id
-    })
-    
 }
