@@ -1,3 +1,8 @@
+/*===============================
+* @file: SimplePostcards.js
+* @date: 2018-03-08 16:59:26
+* @description: 竖状
+=================================*/
 
 import React, { Component } from 'react';
 import { StyleSheet, PropTypes } from 'react-native';
@@ -45,7 +50,7 @@ const styles = StyleSheet.create({
 	}
 });
 
-const MoviePopularCell = ({ info, viewMovie }) => (
+const SimplePostcards = ({ info, viewMovie }) => (
 
 	<TouchableOpacity activeOpacity={0.8} onPress={viewMovie.bind(this, info.id)}>
 		<View style={styles.cardContainer}>
@@ -59,9 +64,9 @@ const MoviePopularCell = ({ info, viewMovie }) => (
 	</TouchableOpacity>
 );
 
-// MoviePopularCell.propTypes = {
+// SimplePostcards.propTypes = {
 // 	info: PropTypes.object.isRequired,
 // 	viewMovie: PropTypes.func.isRequired
 // };
 
-export default MoviePopularCell;
+export default SimplePostcards;

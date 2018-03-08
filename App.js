@@ -10,7 +10,7 @@ import { TabNavigator } from 'react-navigation';
 
 import Movies from './src/_Movies/Controller/Movies';
 import MovieDetails from './src/_MovieDetails/MovieDetails';
-import imageShowView from './src/component/imageShowView';
+import imageShowView from './src/Component/imageShowView';
 
 import {
   Platform,

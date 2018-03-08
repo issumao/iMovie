@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { MovieProtocol, MovieFetchProtocol } from './MovieProtocol'
+import { MovieProtocol, MovieFetchProtocol, MovieListStyles } from './MovieProtocol'
 
 // The Movie DB 类
 export class TheMovieDB implements MovieFetchProtocol {
@@ -28,9 +28,19 @@ export class TheMovieDB implements MovieFetchProtocol {
         })
     }
 
-    movieList(page: number): Promise<Array<MovieProtocol>> {
+    movieList(style: MovieListStyles, page: number): Promise<Array<MovieProtocol>> {
+        var styleString: string = 'now_playing'
+        switch (style) {
+            case MovieListStyles.New:
+                break;
+            case MovieListStyles.Popular:
+                styleString = 'popular';
+                break;
+            case MovieListStyles.HighPraise:
+                break;
+        }
         return new Promise((resolve, reject) => {
-            axios.get(`${this.url}/movie/now_playing?api_key=${this.apiKey}&page=${page}&language=zh`)//&region=CN`)//&language=zh`)
+            axios.get(`${this.url}/movie/${styleString}?api_key=${this.apiKey}&page=${page}&language=zh`)//&region=CN`)//&language=zh`)
                 .then(res => {
                     resolve(res.data)
                 })

@@ -1,3 +1,8 @@
+/*===============================
+* @file: MovieDetails.js
+* @date: 2018-03-08 16:49:20
+* @description: 电影详情页面
+=================================*/
 
 import React, { Component } from 'react';
 import axios from "axios";
@@ -6,14 +11,13 @@ import Icon from "react-native-vector-icons/Ionicons";
 import MCIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import styles from './MovieDetailsStyle';
-import ProgressBar from '../component/ProgressBar';
-import ActorCard from '../component/ActorCard';
+import ProgressBar from '../Component/ProgressBar';
+import ActorCard from '../Component/ActorCard';
 import { TMDB_URL, TMDB_API_KEY, TMDB_IMG_URL } from "../product/productConfig";
 import FastImage from "react-native-fast-image"
 import defaultImage from "../../image/defaultHeaderImage.png"
 
-import IOC from "../Models/IOC"
-// import IOC from "../../Models/IOC"
+import IOC, { MovieFetchIOCKey } from "../Models/IOC/IOCManager"
 
 import {
   Platform,
@@ -77,7 +81,7 @@ export default class DetailsScreen extends React.Component {
   // _获取详细信息
   _retrieveMovieDetails(movieId) {
   
-    IOC.ioc("MovieFetchProtocol").movie(movieId)
+    IOC.get(MovieFetchIOCKey).movie(movieId)
       .then(res => {
         this.setState({
           isLoading: false,

@@ -1,3 +1,8 @@
+/*===============================
+* @file: MovieHeaderCell.js
+* @date: 2018-03-08 16:55:18
+* @description: 电影头部单元视图
+=================================*/
 
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -106,7 +111,7 @@ const styles = StyleSheet.create({
 
 const iconStar = (<Icon name="md-star" size={16} color="#F5B642" />);
 
-const MovieIntroCard = ({ info, viewMovie }) => (
+const MovieHeaderCell = ({ info, viewMovie }) => (
 	<View style={{ backgroundColor: '#800080' }}>
 		<Image source={{ uri: `${TMDB_IMG_URL}/w780/${(info.backdrop_path || info.poster_path)}` }} style={styles.imageBackdrop} />
 		<View style={styles.viewBackdrop} />
@@ -140,9 +145,9 @@ const MovieIntroCard = ({ info, viewMovie }) => (
 	</View>
 );
 
-// MovieIntroCard.propTypes = {
+// MovieHeaderCell.propTypes = {
 // 	info: PropTypes.object.isRequired,
 // 	viewMovie: PropTypes.func.isRequired
 // };
 
-export default MovieIntroCard;
+export default MovieHeaderCell;

@@ -53,8 +53,8 @@ export interface MovieFetchStatic {
 export enum MovieListStyles {
     // 新的
     New = 1,
-    // 热门的
-    Hot,
+    // 流行的
+    Popular,
     // 高评价的
     HighPraise,
 }

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { MovieListStyles } from './MovieProtocol';
 // The Movie DB 类
 export class TheMovieDB {
     constructor(url, key, imageUrl) {
@@ -18,9 +19,19 @@ export class TheMovieDB {
             return;
         });
     }
-    movieList(page) {
+    movieList(style, page) {
+        var styleString = 'now_playing';
+        switch (style) {
+            case MovieListStyles.New:
+                break;
+            case MovieListStyles.Popular:
+                styleString = 'popular';
+                break;
+            case MovieListStyles.HighPraise:
+                break;
+        }
         return new Promise((resolve, reject) => {
-            axios.get(`${this.url}/movie/now_playing?api_key=${this.apiKey}&page=${page}&language=zh`) //&region=CN`)//&language=zh`)
+            axios.get(`${this.url}/movie/${styleString}?api_key=${this.apiKey}&page=${page}&language=zh`) //&region=CN`)//&language=zh`)
                 .then(res => {
                 resolve(res.data);
             })

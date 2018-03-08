@@ -1,6 +1,6 @@
 import { AppRegistry } from 'react-native';
 import App from './App';
-import * as IOC from './src/Models/IOC';
+import * as IOC from './src/Models/IOC/IOCManager';
 
 IOC.initIOC()
 

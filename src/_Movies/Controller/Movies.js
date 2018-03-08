@@ -1,13 +1,21 @@
+/*===============================
+file: Movies.js
+date: 2018-03-08 16:45:49
+description: 电影首页
+=================================*/
+
 import React, { Component } from "react";
+// 第三方控件
 import Swiper from "react-native-swiper";
 import Icon from "react-native-vector-icons/Ionicons";
-import axios from "axios";
 import FastImage from "react-native-fast-image"
-import { TMDB_URL, TMDB_API_KEY } from "../../product/productConfig";
 
+// 子视图
+import MovieHeaderCell from "../View/MovieHeaderCell";
+import SimplePostcards from "../View/SimplePostcards";
 
-import MovieIntroCard from "../View/MovieIntroCard";
-import MoviePopularCell from "../View/MoviePopularCell";
+// IOC 业务
+import IOC, { MovieFetchIOCKey } from "../../Models/IOC/IOCManager"
 
 import {
   Platform,
@@ -19,6 +27,7 @@ import {
   Text,
   View,
 } from "react-native";
+import { MovieListStyles } from "../../Models/IOC/Movie/MovieProtocol";
 
 var Dimensions = require("Dimensions");
 var ScreenWidth = Dimensions.get("window").width;
@@ -148,16 +157,14 @@ export default class Movies extends React.Component {
   };
 
   retrievePopularMovies(page) {
-    return axios
-      .get(
-        `${TMDB_URL}/movie/popular?api_key=${TMDB_API_KEY}&page=${page}&language=zh`//&region=CN`
-      )
+
+    return IOC.get(MovieFetchIOCKey).movieList(MovieListStyles.Popular, page)
       .then(res => {
-        console.log("popularMovies", res.data); //eslint-disable-line
         this.setState({
           isRefreshing: false,
-          popularMovies: res.data
-        });
+          popularMovies: res
+        })
+        console.log('res', res); //eslint-disable-line
       })
       .catch(error => {
         console.log("Popular", error); //eslint-disable-line
@@ -165,19 +172,17 @@ export default class Movies extends React.Component {
   }
 
   retrieveNowPlayingMovies(page) {
-    return axios
-      .get(
-        `${TMDB_URL}/movie/now_playing?api_key=${TMDB_API_KEY}&page=${page}&language=zh`//&region=CN`
-      )
+
+    return IOC.get(MovieFetchIOCKey).movieList(MovieListStyles.New, page)
       .then(res => {
-        console.log("nowPlayingMovies", res.data); //eslint-disable-line
         this.setState({
           isRefreshing: false,
-          nowPlayingMovies: res.data
-        });
+          nowPlayingMovies: res
+        })
+        console.log('res', res); //eslint-disable-line
       })
       .catch(error => {
-        console.log("Popular", error); //eslint-disable-line
+        console.log('Movie Details', error); //eslint-disable-line
       });
   }
 
@@ -251,7 +256,7 @@ export default class Movies extends React.Component {
           height={248 * widthMultipleWith7}
         >
           {/* {nowPlayingMovies.results.map(info => (
-            <MovieIntroCard
+            <MovieHeaderCell
               key={info.id}
               info={info}
               viewMovie={this._viewMovie}
@@ -260,7 +265,7 @@ export default class Movies extends React.Component {
           {
             nowPlayingMovies.results.length > 0 ?
               nowPlayingMovies.results.map(info => (
-                <MovieIntroCard
+                <MovieHeaderCell
                   key={info.id}
                   info={info}
                   viewMovie={this._viewMovie}
@@ -281,7 +286,7 @@ export default class Movies extends React.Component {
           </View>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {popularMovies.results.map(info => (
-              <MoviePopularCell
+              <SimplePostcards
                 key={info.id}
                 info={info}
                 viewMovie={this._viewMovie}

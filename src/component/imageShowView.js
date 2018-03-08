@@ -13,7 +13,7 @@ import {
     Text,
     TouchableOpacity,
 } from 'react-native';
-import ProgressBar from '../component/ProgressBar';
+import ProgressBar from '../Component/ProgressBar';
 
 const { width } = Dimensions.get('window')
 const styles = StyleSheet.create({
