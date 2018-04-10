@@ -1,7 +1,7 @@
-import axios from 'axios';
-import { MovieListStyles } from './MovieProtocol';
+import axios from "axios";
+import { MovieListStyles } from "./MovieProtocol";
 // The Movie DB 类
-export class TheMovieDB {
+export class TimeMovieDB {
     constructor(url, key, imageUrl) {
         this.url = url;
         this.apiKey = key;
@@ -9,7 +9,8 @@ export class TheMovieDB {
     }
     movie(id) {
         return new Promise((resolve, reject) => {
-            axios.get(`${this.url}/movie/${id}?api_key=${this.apiKey}&append_to_response=casts,images,videos`) //&language=zh`)
+            axios
+                .get(`${this.url}/movie/${id}?api_key=${this.apiKey}&append_to_response=casts,images,videos`) //&language=zh`)
                 .then(res => {
                 resolve(res.data);
             })
@@ -19,18 +20,19 @@ export class TheMovieDB {
         });
     }
     movieList(style, page) {
-        var styleString = 'now_playing';
+        var styleString = "now_playing";
         switch (style) {
             case MovieListStyles.New:
                 break;
             case MovieListStyles.Popular:
-                styleString = 'popular';
+                styleString = "popular";
                 break;
             case MovieListStyles.HighPraise:
                 break;
         }
         return new Promise((resolve, reject) => {
-            axios.get(`${this.url}/movie/${styleString}?api_key=${this.apiKey}&page=${page}&language=zh`) //&region=CN`)//&language=zh`)
+            axios
+                .get(`${this.url}/movie/${styleString}?api_key=${this.apiKey}&page=${page}&language=zh`) //&region=CN`)//&language=zh`)
                 .then(res => {
                 resolve(res.data);
             })
@@ -40,4 +42,4 @@ export class TheMovieDB {
         });
     }
 }
-//# sourceMappingURL=TheMovieDB.js.map
+//# sourceMappingURL=TimeMovieDB.js.map

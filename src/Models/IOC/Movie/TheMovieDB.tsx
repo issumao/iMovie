@@ -24,7 +24,7 @@ export class TheMovieDB implements MovieFetchProtocol {
                 })
                 .catch(error => {
                     reject(error)
-                }); return
+                });
         })
     }
 
@@ -46,7 +46,7 @@ export class TheMovieDB implements MovieFetchProtocol {
                 })
                 .catch(error => {
                     reject(error)
-                }); return
+                });
         })
     }
 }

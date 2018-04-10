@@ -5,10 +5,10 @@ export class IOCContainer {
         this.reg = (k, p) => {
             this.map[k] = p;
         };
+        // get = (k: string): IOCProtocol => {
+        //     return this.map[k]
+        // }
         this.get = (k) => {
-            return this.map[k];
-        };
-        this.ioc2 = (k) => {
             return this.map[k];
         };
         // static getType(input: any): string {

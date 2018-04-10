@@ -13,11 +13,11 @@ export class IOCContainer {
         this.map[k] = p
     }
 
-    get = (k: string): IOCProtocol => {
-        return this.map[k]
-    }
+    // get = (k: string): IOCProtocol => {
+    //     return this.map[k]
+    // }
 
-    ioc2 = <T extends IOCProtocol>(k: string): T => {
+    get = <T extends IOCProtocol>(k: string): T => {
         return this.map[k] as T
     }
     
